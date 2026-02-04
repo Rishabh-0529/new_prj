@@ -48,3 +48,17 @@ text,label
 
 - The sample dataset is tiny and intended for demonstration.
 - For real performance, expand the dataset and tune hyperparameters.
+
+## Marks Entry Web App
+
+Run the Flask app to collect marks and append them to `data/marks.csv`.
+
+```bash
+python src/marks_app.py
+```
+
+Then open `http://localhost:8000` in your browser (or use your machine IP with port
+`8000` to access it from anywhere on your network).
+
+Each submission appends a new row with a UTC timestamp to the same CSV file. The file
+is created automatically if it does not already exist.
