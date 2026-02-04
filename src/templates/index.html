@@ -5,99 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Marks Entry</title>
     <style>
-      :root {
-        font-family: "Segoe UI", system-ui, sans-serif;
-        color: #1f2937;
-        background-color: #f9fafb;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      .page {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 32px 16px;
-      }
-
-      .card {
-        width: min(520px, 92vw);
-        background: #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
-        padding: 32px;
-      }
-
-      h1 {
-        margin-top: 0;
-        margin-bottom: 8px;
-        font-size: 1.8rem;
-      }
-
-      p {
-        margin-top: 0;
-        margin-bottom: 24px;
-        color: #4b5563;
-      }
-
-      label {
-        font-weight: 600;
-        display: block;
-        margin-bottom: 6px;
-      }
-
-      input {
-        width: 100%;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid #d1d5db;
-        font-size: 1rem;
-        box-sizing: border-box;
-        margin-bottom: 16px;
-      }
-
-      button {
-        width: 100%;
-        padding: 12px 16px;
-        border: none;
-        border-radius: 10px;
-        background: #2563eb;
-        color: #ffffff;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      .banner {
-        padding: 12px 14px;
-        border-radius: 10px;
-        margin-bottom: 16px;
-        font-weight: 600;
-      }
-
-      .banner.success {
-        background: #dcfce7;
-        color: #166534;
-      }
-
-      .banner.error {
-        background: #fee2e2;
-        color: #991b1b;
-      }
+      :root{--accent1:#36a3ff;--accent2:#3b82f6}
+      html,body{height:100%}
+      body{margin:0;background:linear-gradient(135deg,#7ecbff 0%,#3b82f6 100%);font-family:Segoe UI, system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial}
+      .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px}
+      .panel{width:min(1200px,96vw);background:rgba(255,255,255,0.65);border-radius:14px;padding:20px 24px;backdrop-filter:blur(8px);box-shadow:0 12px 40px rgba(2,6,23,0.2)}
+      h1{margin:0 0 8px 0;font-size:1.6rem;color:#04336a}
+      p{margin:0 0 14px 0;color:#0f172a}
+      .row{display:flex;gap:12px;align-items:flex-start}
+      .col{flex:1;min-width:160px}
+      label{display:block;font-weight:600;margin-bottom:6px;color:#042a4e}
+      input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(2,6,23,0.08);box-sizing:border-box}
+      .actions{display:flex;gap:8px;margin-top:12px}
+      .btn{padding:10px 14px;border-radius:10px;border:none;color:white;font-weight:700;cursor:pointer}
+      .btn.primary{background:linear-gradient(90deg,#ff7a18,#ff4e50)}
+      .btn.green{background:linear-gradient(90deg,#10b981,#059669)}
+      .btn.blue{background:linear-gradient(90deg,#3b82f6,#2563eb)}
+      .banner{padding:10px;border-radius:8px;margin-bottom:12px}
+      .banner.success{background:#ecfdf5;color:#065f46}
+      .banner.error{background:#fff1f2;color:#7f1d1d}
+      table{width:100%;border-collapse:collapse;margin-top:16px}
+      th,td{padding:10px;border-bottom:1px solid rgba(2,6,23,0.06);text-align:left}
+      .delete-btn{background:#ef4444;padding:8px 10px;border-radius:8px;color:white;border:none;cursor:pointer}
+      @media(max-width:900px){.row{flex-direction:column}.panel{padding:16px}}
     </style>
   </head>
   <body>
-    <div class="page">
-      <main class="card">
-        <h1>Marks Entry</h1>
-        <p>Enter student marks and submit to append to the CSV file.</p>
+    <div class="container">
+      <div class="panel">
+        <h1>Insurance details</h1>
+        <p>Enter student insurance details and submit to append to the CSV file.</p>
 
         {% if submitted %}
-        <div class="banner success">Saved! Your marks were appended.</div>
+        <div class="banner success">Saved! Your insurance details were appended.</div>
         {% endif %}
 
         {% if error %}
@@ -105,36 +45,74 @@
         {% endif %}
 
         <form method="post">
-          <label for="student_name">Student name</label>
-          <input
-            id="student_name"
-            name="student_name"
-            placeholder="e.g. Priya Sharma"
-            value="{{ form_data.student_name if form_data }}"
-            required
-          />
+          <div class="row">
+            <div class="col">
+              <label for="student_name">Name</label>
+              <input id="student_name" name="student_name" placeholder="e.g. Priya Sharma" value="{{ form.student_name|default('') }}" required />
+            </div>
+            <div class="col">
+              <label for="mobile">Mobile</label>
+              <input id="mobile" name="mobile" placeholder="e.g. +911234567890" value="{{ form.mobile|default('') }}" />
+            </div>
+            <div class="col">
+              <label for="address">Address</label>
+              <input id="address" name="address" placeholder="e.g. 12 MG Road" value="{{ form.address|default('') }}" />
+            </div>
+            <div class="col">
+              <label for="insurance_number">Insurance #</label>
+              <input id="insurance_number" name="insurance_number" placeholder="e.g. INS-12345" value="{{ form.insurance_number|default('') }}" />
+            </div>
+            <div class="col">
+              <label for="insurance_expiry">Expiry</label>
+              <input id="insurance_expiry" name="insurance_expiry" type="date" value="{{ form.insurance_expiry|default('') }}" />
+            </div>
+            <div class="col">
+              <label for="insurance_company">Company</label>
+              <input id="insurance_company" name="insurance_company" placeholder="e.g. ABC Insurance" value="{{ form.insurance_company|default('') }}" />
+            </div>
+          </div>
 
-          <label for="subject">Subject</label>
-          <input
-            id="subject"
-            name="subject"
-            placeholder="e.g. Mathematics"
-            value="{{ form_data.subject if form_data }}"
-            required
-          />
-
-          <label for="marks">Marks</label>
-          <input
-            id="marks"
-            name="marks"
-            placeholder="e.g. 95"
-            value="{{ form_data.marks if form_data }}"
-            required
-          />
-
-          <button type="submit">Save to CSV</button>
+          <div class="actions">
+            <button class="btn primary" type="submit">Save to CSV</button>
+            <a class="btn green" href="/export?month={{ active_month }}">Download Excel</a>
+            <a class="btn blue" href="/records">View by date</a>
+          </div>
         </form>
-      </main>
+
+        <h2 style="margin-top:20px">Saved entries ({{ entries|length }})</h2>
+        {% if entries %}
+        <table>
+          <thead>
+            <tr>
+              <th style="width:220px">Timestamp</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Company</th>
+              <th style="width:120px">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for e in entries %}
+            <tr>
+              <td>{{ e.timestamp }}</td>
+              <td>{{ e.student_name }}</td>
+              <td>{{ e.mobile }}</td>
+              <td>{{ e.insurance_company }}</td>
+              <td>
+                <form method="post" action="/delete" style="display:inline">
+                  <input type="hidden" name="timestamp" value="{{ e.timestamp }}" />
+                  <input type="hidden" name="next" value="/?month={{ active_month }}" />
+                  <button class="delete-btn" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p style="color:#08203d">No entries for this month.</p>
+        {% endif %}
+      </div>
     </div>
   </body>
 </html>
