@@ -17,12 +17,15 @@ except Exception:  # pragma: no cover - friendly failure handled at runtime
 from flask import Flask, redirect, request, url_for, render_template
 
 
-BASE_DIR = Path(__file__).resolve().parents[1]
+# set base directory to the repository root (where app.py lives)
+BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 EXCEL_PATH = DATA_DIR / "marks.xlsx"
 CSV_PATH = DATA_DIR / "marks.csv"
 
-app = Flask(__name__)
+# templates are located in src/templates (we keep them there)
+TEMPLATE_DIR = BASE_DIR / "src" / "templates"
+app = Flask(__name__, template_folder=str(TEMPLATE_DIR))
 
 
 # index template moved to src/templates/index.html
